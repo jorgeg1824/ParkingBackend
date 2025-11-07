@@ -28,4 +28,13 @@ public final class TextHelper {
 		
 	}
 	
+	public static boolean lengthIsValid(final String value, final int min, final int max, final boolean mustApplyTrim) {
+		var length = (mustApplyTrim ? getDefaultWithTrim(value) : getDefault(value)).length();
+		return length >= min && length <= max;
+	}
+	
+	public static boolean lengthIsValidWithTrim(final String value, final int min, final int max) {
+		return lengthIsValid(getDefaultWithTrim(value), min, max, true);
+	}
+	
 }
