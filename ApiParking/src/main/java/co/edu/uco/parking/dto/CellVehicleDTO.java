@@ -10,7 +10,7 @@ public final class CellVehicleDTO {
     private VehicleDTO vehicle;
 
     public CellVehicleDTO() {
-        this.id = UUID.randomUUID(); // o null, si prefieres asignarlo luego
+        this.id = UUID.randomUUID(); 
         this.rate = 0;
         this.cell = new CellDTO();
         this.vehicle = new VehicleDTO();

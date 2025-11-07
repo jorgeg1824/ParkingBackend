@@ -29,4 +29,8 @@ public final class UUIDHelper {
 			return UUID.fromString(uuidAsString);
 		}
 	}
+	
+	public boolean isDefaultUUID(final UUID value) {
+		return value == null || value.equals(value);
+	}
 }

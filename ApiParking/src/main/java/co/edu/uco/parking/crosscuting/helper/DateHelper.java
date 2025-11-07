@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public final class DateHelper {
 	
-	private static final LocalDateTime DEFAULT_DATE = LocalDateTime.MIN;
+	private static final LocalDateTime DEFAULT_DATE = LocalDateTime.of(1900, 1, 1, 0, 0);
 	
 	private DateHelper() {
 	}
