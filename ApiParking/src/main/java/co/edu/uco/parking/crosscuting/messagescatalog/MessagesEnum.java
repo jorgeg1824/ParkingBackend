@@ -455,10 +455,18 @@ public enum MessagesEnum {
 	
 	USER_CELL_ERROR_DAO_CREATING_CELL("Problema creando la celda", 
 			"Se ha presentado un problema tratando de registrar la información de la nueva celda."
-			+ "Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+			+ " Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
 	
 	TECHNICAL_ERROR_DAO_CREATING_CELL("Error creando la celda",
 			"Se presentó un error de tipo SQLException al tratar de ejecutar el proceso de creación de una nueva celda."
+			+ "Por favor valide la consola de errores para revisar con detalle el problema presentado."),
+	
+	USER_CELL_UNEXPECTED_ERROR_DAO_CREATING_CELL("Problema inesperado creando la celda", 
+			"Se ha presentado un problema inesperado tratando de registrar la información de la nueva celda."
+			+ " Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+	
+	TECHNICAL_UNEXPECTED_ERROR_DAO_CREATING_CELL("Error inesperado creando la celda",
+			"Se presentó un error no controlado de tipo Exception al tratar de ejecutar el proceso de creación de una nueva celda."
 			+ "Por favor valide la consola de errores para revisar con detalle el problema presentado."),
 	
 	USER_CELL_ERROR_DAO_FINDING_ALL_CELLS("Problema consultando las celdas",
@@ -794,8 +802,195 @@ public enum MessagesEnum {
 	
 	TECHNICAL_ERROR_FACADE_LIST_ZONES("Error técnico al consultar las zonas de parqueo",
 			"Se presentó un error técnico al tratar de consultar la información de las zonas de parqueo en la base de datos. "
-			+ "Por favor valide la consola de errores para revisar con detalle el problema presentado.");
+			+ "Por favor valide la consola de errores para revisar con detalle el problema presentado."),
 	
+	USER_ERROR_VALIDATING_NULL_CELL("No es posible registrar una celda vacía.",
+		    "Se ha presentado un problema tratando de registrar una celda vacía. "
+		    + "Por favor intente de nuevo con información válida y si el problema persiste, contacte al administrador de la aplicación."),
+
+	TECHNICAL_ERROR_VALIDATING_NULL_CELL("Error validando una celda nula.",
+		    "Se recibió un objeto CellDomain nulo al intentar registrar una celda. "
+		    + "Revise la lógica de validación o el flujo que envía el objeto al validador."),
+	
+	USER_ERROR_VALIDATING_CELLTYPE_NULL("El tipo de celda es obligatorio.",
+		    "Se ha presentado un problema tratando de registrar la celda porque no se proporcionó un tipo de celda válido. "
+		    + "Por favor seleccione un tipo de celda e intente nuevamente."),
+
+	TECHNICAL_ERROR_VALIDATING_CELLTYPE_NULL("Error validando el tipo de celda.",
+		    "El campo cellType o cellType.id en CellDomain llegó nulo. "
+		    + "Revise la construcción del objeto antes de ejecutar la validación o persistencia."),
+	
+	USER_ERROR_VALIDATING_ZONE_NULL("La zona de la celda es obligatoria.",
+		    "Se ha presentado un problema tratando de registrar la celda porque no se especificó una zona válida. "
+		    + "Por favor seleccione una zona e intente nuevamente."),
+
+	TECHNICAL_ERROR_VALIDATING_ZONE_NULL("Error validando la zona de la celda.",
+		    "El campo zone o zone.id en CellDomain llegó nulo. "
+		    + "Verifique que la zona esté correctamente asociada al objeto CellDomain antes de persistir."),
+	
+	USER_ERROR_RULE_CELLNAME_DUPLICATE_DATA_NULL("No se recibió información para validar el nombre de la celda.",
+		    "Se ha presentado un problema tratando de validar el nombre de la celda. "
+		    + "Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+
+	TECHNICAL_ERROR_RULE_CELLNAME_DUPLICATE_DATA_NULL("Error validando duplicidad de nombre de celda: datos nulos.",
+		    "El arreglo 'data' llegó nulo en la clase CellNameNotDuplicateRule. "
+		    + "Verifique el paso de parámetros desde la capa de validación o negocio."),
+	
+	USER_ERROR_RULE_CELLNAME_DUPLICATE_INSUFFICIENT_DATA("Información insuficiente para validar duplicados de nombre de celda.",
+		    "No fue posible realizar la validación del nombre porque no se proporcionó toda la información requerida. "
+		    + "Por favor intente de nuevo."),
+
+	TECHNICAL_ERROR_RULE_CELLNAME_DUPLICATE_INSUFFICIENT_DATA("Error validando duplicidad de nombre de celda: parámetros insuficientes.",
+		    "Se esperaban dos parámetros en CellNameNotDuplicateRule: el nombre de la celda (String) y el DAOFactory. "
+		    + "Verifique la invocación de la regla."),
+	
+	USER_ERROR_RULE_CELLNAME_DUPLICATE_EMPTY_NAME("El nombre de la celda es obligatorio para validar duplicados.",
+		    "No se pudo realizar la validación porque el nombre de la celda está vacío o no fue proporcionado. "
+		    + "Por favor ingrese un nombre válido e intente de nuevo."),
+
+	TECHNICAL_ERROR_RULE_CELLNAME_DUPLICATE_EMPTY_NAME("Error validando duplicidad de nombre de celda: nombre vacío.",
+		    "El valor del parámetro 'name' llegó vacío o nulo en la clase CellNameNotDuplicateRule. "
+		    + "Revise la asignación de valores antes de ejecutar la regla."),
+	
+	USER_ERROR_RULE_CELLNAME_DUPLICATE_FOUND("Ya existe una celda registrada con el nombre especificado.",
+		    "No se puede registrar la celda porque el nombre ya está en uso. "
+		    + "Por favor elija un nombre diferente."),
+
+	TECHNICAL_ERROR_RULE_CELLNAME_DUPLICATE_FOUND("Error validando duplicidad de nombre de celda: registro existente.",
+		    "Se encontró al menos un registro en la base de datos con el mismo nombre de celda durante la ejecución de CellNameNotDuplicateRule. "
+		    + "Verifique la consulta del DAO y la integridad de los datos."),
+	
+	USER_CELL_ERROR_DAO_CREATING_CELL_DUPLICATE("Ya existe una celda registrada con el mismo nombre.",
+		    "No se puede registrar una celda con un nombre duplicado."
+		    + " Por favor use un nombre diferente."),
+
+	TECHNICAL_ERROR_DAO_CREATING_CELL_DUPLICATE("Violación de restricción de unicidad al crear la celda",
+		    "Se produjo una violación de la restricción UNIQUE (unique_cell_name) al intentar insertar una nueva celda en la base de datos."
+		    + " Verifique la integridad de los datos y la consulta SQL ejecutada."),
+	
+	USER_ERROR_RULE_NULL_DATA_CELL_ID("Error validando el identificador de la celda",
+		    "No se recibió información para validar el identificador de la celda. "
+		    + "Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+
+	TECHNICAL_ERROR_RULE_NULL_DATA_CELL_ID("Error técnico validando el identificador de la celda",
+		    "El arreglo 'data' llegó nulo en la ejecución de CellIdNotDuplicateRule. "
+		    + "Esto indica un posible error en la invocación del método execute(Object... data)."),
+
+	USER_ERROR_RULE_INSUFFICIENT_DATA_CELL_ID("Información insuficiente para validar duplicados de identificador de celda",
+		    "No se recibió la información necesaria para validar duplicados del identificador de la celda. "
+		    + "Por favor intente de nuevo."),
+
+	TECHNICAL_ERROR_RULE_INSUFFICIENT_DATA_CELL_ID("Error técnico validando duplicados de identificador de celda",
+		    "Se esperaban dos parámetros en el arreglo 'data': el UUID de la celda y una instancia de DAOFactory. "
+		    + "El arreglo recibido contiene menos de dos elementos."),
+
+	USER_ERROR_RULE_DEFAULT_UUID_CELL_ID("Identificador de celda no válido",
+		    "El identificador de la celda no puede ser vacío o por defecto. "
+		    + "Por favor proporcione un identificador válido."),
+
+	TECHNICAL_ERROR_RULE_DEFAULT_UUID_CELL_ID("Error técnico validando identificador de celda",
+		    "El UUID recibido para la celda corresponde al valor por defecto (UUIDHelper.DEFAULT_UUID)."),
+
+	USER_ERROR_RULE_DUPLICATE_CELL_ID("Identificador de celda duplicado",
+		    "Ya existe una celda registrada con ese identificador. "
+		    + "Por favor utilice un identificador distinto."),
+
+	TECHNICAL_ERROR_RULE_DUPLICATE_CELL_ID("Error técnico por identificador duplicado de celda",
+		    "Se encontró una celda existente en la base de datos con el mismo identificador UUID."),
+	
+	USER_ERROR_RULE_NULL_OR_INSUFFICIENT_DATA_CELL_NAME("Error validando el nombre de la celda",
+		    "No se recibió el nombre de la celda para validación. "
+		    + "Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+
+	TECHNICAL_ERROR_RULE_NULL_OR_INSUFFICIENT_DATA_CELL_NAME("Error técnico validando el nombre de la celda",
+		    "CellNameFormatRule recibió argumentos nulos o insuficientes en el método execute(Object... data)."),
+
+	USER_ERROR_RULE_INVALID_FORMAT_CELL_NAME("Formato inválido para el nombre de la celda",
+		    "El nombre de la celda debe tener el formato 'Letra-Mayúscula-Guion-Número' (por ejemplo, A-1). "
+		    + "Por favor verifique e intente nuevamente."),
+
+	TECHNICAL_ERROR_RULE_INVALID_FORMAT_CELL_NAME("Error técnico validando formato del nombre de la celda",
+		    "El valor proporcionado no cumple con el patrón de validación ^[A-Z]-\\d+$ definido en CellNameFormatRule."),
+
+	USER_ERROR_RULE_NULL_OR_INSUFFICIENT_DATA_CELL_NAME_LENGTH("Problema al recibir los datos para la validación del nombre de la celda",
+	        "No se recibió la información necesaria para validar la longitud del nombre de la celda."
+	        + " Por favor proporcione un nombre válido para continuar."),
+
+	TECHNICAL_ERROR_RULE_NULL_OR_INSUFFICIENT_DATA_CELL_NAME_LENGTH("Error técnico en la validación de longitud del nombre de la celda",
+	        "El método execute(Object... data) de la clase CellNameLengthRule recibió argumentos nulos o insuficientes."
+	        + " Por favor revise la lógica de invocación de la regla para asegurar que los parámetros sean correctos."),
+	
+	USER_ERROR_RULE_INVALID_LENGTH_CELL_NAME("El nombre de la celda no cumple con la longitud permitida.",
+		    "El nombre de la celda no puede superar los 50 caracteres."),
+
+	TECHNICAL_ERROR_RULE_INVALID_LENGTH_CELL_NAME("Error técnico validando la longitud del nombre de la celda.",
+		    "El campo 'name' en CellDomain excede la longitud máxima (50 caracteres)."),
+		
+	USER_ERROR_RULE_CELLTYPE_EXIST_BY_ID_DATA_NULL("No se recibió información para validar la existencia del tipo de celda.",
+		    "Se ha presentado un problema tratando de validar la existencia del tipo de celda. "
+		    + "Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+
+	TECHNICAL_ERROR_RULE_CELLTYPE_EXIST_BY_ID_DATA_NULL("Error validando existencia de tipo de celda: datos nulos.",
+		    "El arreglo 'data' llegó nulo en la clase CellTypeExistByIdRule. "
+		    + "Verifique el paso de parámetros desde la capa de validación o negocio."),	
+	
+	USER_ERROR_RULE_CELLTYPE_EXIST_BY_ID_INSUFFICIENT_DATA("Información insuficiente para validar la existencia del tipo de celda.",
+		    "No fue posible realizar la validación porque no se proporcionó toda la información requerida. "
+		    + "Por favor intente de nuevo."),
+
+	TECHNICAL_ERROR_RULE_CELLTYPE_EXIST_BY_ID_INSUFFICIENT_DATA("Error validando existencia de tipo de celda: parámetros insuficientes.",
+		    "Se esperaban dos parámetros en CellTypeExistByIdRule: el identificador del tipo de celda (UUID) y el DAOFactory. "
+		    + "Verifique la invocación de la regla."),
+	
+	USER_ERROR_RULE_CELLTYPE_EXIST_BY_ID_INVALID_ID("Debe especificar un identificador válido para el tipo de celda.",
+		    "No se pudo realizar la validación porque el identificador del tipo de celda no fue proporcionado o es inválido. "
+		    + "Por favor intente de nuevo."),
+
+	TECHNICAL_ERROR_RULE_CELLTYPE_EXIST_BY_ID_INVALID_ID("Error validando existencia de tipo de celda: identificador inválido.",
+		    "El valor del parámetro 'id' llegó nulo o es el UUID por defecto en la clase CellTypeExistByIdRule. "
+		    + "Revise la asignación del identificador antes de ejecutar la regla."),
+	
+	USER_ERROR_RULE_CELLTYPE_EXIST_BY_ID_NOT_FOUND("El tipo de celda especificado no existe en el sistema.",
+		    "No se pudo completar la validación porque el tipo de celda no se encuentra registrado. "
+		    + "Por favor verifique el identificador ingresado."),
+
+	TECHNICAL_ERROR_RULE_CELLTYPE_EXIST_BY_ID_NOT_FOUND("Error validando existencia de tipo de celda: registro no encontrado.",
+		    "No se encontró ningún registro en la base de datos correspondiente al identificador especificado durante la ejecución de CellTypeExistByIdRule. "
+		    + "Verifique la consulta del DAO y la integridad de los datos."),
+		
+	USER_ERROR_RULE_ZONE_EXIST_BY_ID_DATA_NULL("No se recibió información para validar la existencia de la zona.",
+		    "Se ha presentado un problema tratando de validar la existencia de la zona. "
+		    + "Por favor intente de nuevo y si el problema persiste, contacte al administrador de la aplicación."),
+
+	TECHNICAL_ERROR_RULE_ZONE_EXIST_BY_ID_DATA_NULL("Error validando existencia de zona: datos nulos.",
+		    "El arreglo 'data' llegó nulo en la clase ZoneExistByIdRule. "
+		    + "Verifique el paso de parámetros desde la capa de validación o negocio."),	
+	
+	USER_ERROR_RULE_ZONE_EXIST_BY_ID_INSUFFICIENT_DATA("Información insuficiente para validar la existencia de la zona.",
+		    "No fue posible realizar la validación porque no se proporcionó toda la información requerida. "
+		    + "Por favor intente de nuevo."),
+
+	TECHNICAL_ERROR_RULE_ZONE_EXIST_BY_ID_INSUFFICIENT_DATA("Error validando existencia de tipo de zona: parámetros insuficientes.",
+		    "Se esperaban dos parámetros en ZoneExistByIdRule: el identificador del tipo de celda (UUID) y el DAOFactory. "
+		    + "Verifique la invocación de la regla."),
+	
+	USER_ERROR_RULE_ZONE_EXIST_BY_ID_INVALID_ID("Debe especificar un identificador válido para la zona.",
+		    "No se pudo realizar la validación porque el identificador de la zona no fue proporcionado o es inválido. "
+		    + "Por favor intente de nuevo."),
+
+	TECHNICAL_ERROR_RULE_ZONE_EXIST_BY_ID_INVALID_ID("Error validando existencia de zona: identificador inválido.",
+		    "El valor del parámetro 'id' llegó nulo o es el UUID por defecto en la clase ZoneExistByIdRule. "
+		    + "Revise la asignación del identificador antes de ejecutar la regla."),
+	
+	USER_ERROR_RULE_ZONE_EXIST_BY_ID_NOT_FOUND("La zona especificada no existe en el sistema.",
+		    "No se pudo completar la validación porque la zona ingresada no se encuentra registrada. "
+		    + "Por favor verifique el identificador ingresado."),
+
+	TECHNICAL_ERROR_RULE_ZONE_EXIST_BY_ID_NOT_FOUND("Error validando existencia de zona: registro no encontrado.",
+		    "No se encontró ningún registro en la base de datos correspondiente al identificador especificado durante la ejecución de ZoneExistByIdRule. "
+		    + "Verifique la consulta del DAO y la integridad de los datos.");
+
+
 	private String title;
 	private String content;
 	

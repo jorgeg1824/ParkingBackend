@@ -48,7 +48,7 @@ public class CellController {
 		}catch (Exception exception) {
 			var userMessage = MessagesEnum.USER_ERROR_DAO_UNEXPECTED_ERROR_FINDING_ALL_USERS.getContent();
 			responseObjectData = Response.createFailedResponse();
-			responseObjectData.addMessage(userMessage.toString());
+			responseObjectData.addMessage(userMessage);
 			responseStatusCode = HttpStatus.INTERNAL_SERVER_ERROR;
 			exception.printStackTrace();
 		}

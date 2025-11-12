@@ -37,4 +37,11 @@ public final class TextHelper {
 		return lengthIsValid(getDefaultWithTrim(value), min, max, true);
 	}
 	
+	public static boolean matchesPattern(final String value, final String regex) {
+	    if (isEmptyWithTrim(value) || ObjectHelper.isNull(regex)) {
+	        return false;
+	    }
+	    return getDefaultWithTrim(value).matches(regex);
+	}
+	
 }

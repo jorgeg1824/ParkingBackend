@@ -64,25 +64,21 @@ public final class CellSqlBuilder {
 	        return sql.toString();
 	    }
 
-	    // Filtrar por id_celda
 	    if (!UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getId())) {
 	        sql.append(" AND c.\"id_celda\" = ? ");
 	        params.add(filter.getId());
 	    }
 
-	    // Filtrar por nombre_celda
 	    if (!TextHelper.isEmpty(filter.getName())) {
 	        sql.append(" AND LOWER(c.\"nombre_celda\") LIKE LOWER(?) ");
 	        params.add("%" + filter.getName() + "%");
 	    }
 
-	    // Filtrar por es_activo
 	    if (!ObjectHelper.isNull(filter.isActive())) {
 	        sql.append(" AND c.\"es_activo\" = ? ");
 	        params.add(filter.isActive());
 	    }
 
-	    // Filtrar por id_zona (si viene un ZoneEntity dentro del CellEntity)
 	    if (!ObjectHelper.isNull(filter.getZone()) &&
 	        !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getZone().getId())) {
 	        
@@ -90,7 +86,6 @@ public final class CellSqlBuilder {
 	        params.add(filter.getZone().getId());
 	    }
 
-	    // Filtrar por id_tipo_celda (si viene un CellTypeEntity)
 	    if (!ObjectHelper.isNull(filter.getCellType()) &&
 	        !UUIDHelper.getUUIDHelper().isDefaultUUID(filter.getCellType().getId())) {
 	        

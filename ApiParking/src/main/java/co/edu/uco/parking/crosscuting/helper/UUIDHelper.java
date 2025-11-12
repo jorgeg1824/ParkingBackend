@@ -31,6 +31,6 @@ public final class UUIDHelper {
 	}
 	
 	public boolean isDefaultUUID(final UUID value) {
-		return value == null || value.equals(value);
+		return ObjectHelper.isNull(value) || UUID_DEFAULT_AS_STRING.equals(value);
 	}
 }

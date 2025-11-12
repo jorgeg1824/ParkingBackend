@@ -23,7 +23,6 @@ public final class CellPostgresqlDAO extends SqlConnection implements CellDAO {
     public CellPostgresqlDAO(final Connection connection) {
         super(connection);
         this.sqlBuilder = new CellSqlBuilder();
-        new CellEntityMapper();
     }
 
     @Override
@@ -34,13 +33,25 @@ public final class CellPostgresqlDAO extends SqlConnection implements CellDAO {
         try (var ps = getConnection().prepareStatement(sql)) {
             PreparedStatementHelper.setCellParametersForInsert(ps, entity);
             ps.executeUpdate();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
+        	
+            if (e.getSQLState() != null && e.getSQLState().equals("23505")) {
+            	var userMessage = MessagesEnum.USER_CELL_ERROR_DAO_CREATING_CELL_DUPLICATE.getContent();
+            	var technicalMessage = MessagesEnum.TECHNICAL_ERROR_DAO_CREATING_CELL_DUPLICATE.getContent();
+            	throw ParkingException.create(e, userMessage, technicalMessage);
+            }
+
             throw ParkingException.createDaoException(
                 e,
                 MessagesEnum.USER_CELL_ERROR_DAO_CREATING_CELL,
                 MessagesEnum.TECHNICAL_ERROR_DAO_CREATING_CELL
             );
+        } catch(final Exception exception) {
+        	var userMessage = MessagesEnum.USER_CELL_UNEXPECTED_ERROR_DAO_CREATING_CELL.getContent();
+        	var technicalMessage = MessagesEnum.TECHNICAL_UNEXPECTED_ERROR_DAO_CREATING_CELL.getContent();
+        	throw ParkingException.create(exception, userMessage, technicalMessage);
         }
+
     }
 
     @Override

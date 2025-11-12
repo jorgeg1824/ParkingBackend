@@ -70,4 +70,5 @@ public final class CellEntity {
     public void setActive(final boolean active) {
         this.active = BooleanHelper.getDefault(active);
     }
+
 }
